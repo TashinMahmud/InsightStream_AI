@@ -18,7 +18,7 @@ export default function Sidebar() {
         setIsMounted(true)
         let isSubscribed = true
 
-        fetch('http://localhost:8000/api/history')
+        fetch('http://localhost:8080/api/history')
             .then(res => res.json())
             .then(data => {
                 if (isSubscribed && Array.isArray(data)) {
