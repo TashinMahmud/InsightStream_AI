@@ -82,7 +82,7 @@ export default function ChatInterface() {
         if (!query.trim() || isSearching) return
 
         setIsSearching(true)
-        setSearchComplete(false)
+
         const q = query;
 
         let currentHistory = [...messages]
@@ -154,7 +154,6 @@ export default function ChatInterface() {
             setResponse("An error occurred while searching. Please ensure the backend is running and API keys are set.")
         } finally {
             setIsSearching(false)
-            setSearchComplete(true)
         }
     }
 
