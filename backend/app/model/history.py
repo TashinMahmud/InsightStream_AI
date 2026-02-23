@@ -6,6 +6,8 @@ class SearchHistory(Base):
     __tablename__ = "search_history"
 
     id = Column(Integer, primary_key=True, index=True)
+    session_id = Column(String, index=True)
+    title = Column(String)
     query = Column(String, index=True)
     response = Column(Text)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))

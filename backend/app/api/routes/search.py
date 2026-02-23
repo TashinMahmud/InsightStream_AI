@@ -7,11 +7,17 @@ from app.services.openai_client import generate_streaming_response
 from app.data.database import get_db
 from app.model.history import SearchHistory
 import json
+import uuid
 
 router = APIRouter()
 
-def save_to_db(db: Session, query: str, full_response: str):
-    new_history = SearchHistory(query=query, response=full_response)
+def save_to_db(db: Session, session_id: str, title: str, query: str, full_response: str):
+    new_history = SearchHistory(
+        session_id=session_id, 
+        title=title, 
+        query=query, 
+        response=full_response
+    )
     db.add(new_history)
     db.commit()
 
@@ -19,6 +25,14 @@ def save_to_db(db: Session, query: str, full_response: str):
 async def search_streaming(request: SearchRequest, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
     query = request.query
     history = request.history
+    session_id = request.session_id or str(uuid.uuid4())
+    
+    # Determine the title (use first query if it's a new session, or fetch existing)
+    title = query[:50] + "..." if len(query) > 50 else query
+    if request.session_id:
+        existing_session = db.query(SearchHistory).filter(SearchHistory.session_id == session_id).first()
+        if existing_session and existing_session.title:
+            title = existing_session.title
     
     try:
         # 1. Fetch search context using Tavily (ONLY SINGLE QUERY)
@@ -40,6 +54,9 @@ async def search_streaming(request: SearchRequest, background_tasks: BackgroundT
 
     # 3. Stream and accumulate the response
     async def event_generator():
+        # Yield the session ID as a system JSON string before actual text begins
+        yield json.dumps({"session_id": session_id}) + "\n"
+
         full_response = ""
         try:
             async for chunk in openai_stream:
@@ -49,7 +66,7 @@ async def search_streaming(request: SearchRequest, background_tasks: BackgroundT
                     yield content
                     
             # 4. Save to DB in the background after streaming completes
-            background_tasks.add_task(save_to_db, db, query, full_response)
+            background_tasks.add_task(save_to_db, db, session_id, title, query, full_response)
         except Exception as e:
             yield f"\n\n[Error during stream: {str(e)}]"
 
