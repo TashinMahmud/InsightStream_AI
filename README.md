@@ -1,4 +1,4 @@
-# 🔍 AI Search Engine — Full-Stack Real-Time SSE Search Platform
+# 🔍 InsightStream AI — Full-Stack Real-Time SSE Search Platform
 
 <div align="center">
 
@@ -10,7 +10,7 @@
 
 ---
 
-**AI Search Engine** is a high-performance, full-stack search application. By marrying a **FastAPI** backend with a **Next.js** frontend, it takes natural language queries, queries the **Tavily API** for real-time web context, processes and summarizes the fetched results through **OpenAI GPT**, streams responses to the client using Server-Sent Events (SSE), and saves session chat history to a local SQLite database.
+**InsightStream AI** is a high-performance, full-stack search application. By marrying a **FastAPI** backend with a **Next.js** frontend, it takes natural language queries, queries the **Tavily API** for real-time web context, processes and summarizes the fetched results through **OpenAI GPT**, streams responses to the client using Server-Sent Events (SSE), and saves session chat history to a local SQLite database.
 
 </div>
 
