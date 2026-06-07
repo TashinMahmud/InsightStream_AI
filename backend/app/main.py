@@ -21,4 +21,4 @@ app.include_router(history.router, prefix="/api", tags=["History"])
 
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to AI Search Engine API"}
+    return {"message": "Welcome to AI Search Engine API", "version": "v1.1"}
