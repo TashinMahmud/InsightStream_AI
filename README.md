@@ -5,12 +5,13 @@
 [![Next.js](https://img.shields.io/badge/Next.js-14-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-005571?style=for-the-badge&logo=fastapi&logoColor=white)](#1-backend-setup-fastapi)
 [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-412991?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com/)
+[![Groq](https://img.shields.io/badge/Groq-llama--3.3-orange?style=for-the-badge)](#openai-stream-client)
 [![Tavily API](https://img.shields.io/badge/Tavily-Search_API-0284C7?style=for-the-badge)](#tavily-search-context-client)
 [![SQLite](https://img.shields.io/badge/SQLite-Local_DB-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](#sqlite-history-database)
 
 ---
 
-**InsightStream AI** is a high-performance, full-stack search application. By marrying a **FastAPI** backend with a **Next.js** frontend, it takes natural language queries, queries the **Tavily API** for real-time web context, processes and summarizes the fetched results through **OpenAI GPT**, streams responses to the client using Server-Sent Events (SSE), and saves session chat history to a local SQLite database.
+**InsightStream AI** is a high-performance, full-stack search application. By marrying a **FastAPI** backend with a **Next.js** frontend, it takes natural language queries, queries the **Tavily API** for real-time web context, processes and summarizes the fetched results through **OpenAI GPT** or **Groq** models (if configured), streams responses to the client using Server-Sent Events (SSE), and saves session chat history to a local SQLite database.
 
 </div>
 
@@ -107,6 +108,10 @@ Saves the search queries and completed AI summaries to a local SQLite file (`sea
     OPENAI_API_KEY=your_openai_key_here
     TAVILY_API_KEY=your_tavily_key_here
     DATABASE_URL=sqlite:///./search_history.db
+
+    # Optional: Set GROQ API Key to switch the chat completion client from OpenAI to Groq
+    GROQ_API_KEY=your_groq_key_here
+    GROQ_MODEL=llama-3.3-70b-versatile
     ```
 5.  Run the server:
     ```bash
