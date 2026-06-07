@@ -18,7 +18,8 @@ export default function Sidebar() {
         setIsMounted(true)
         let isSubscribed = true
 
-        fetch('http://localhost:8080/api/history')
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
+        fetch(`${apiUrl}/api/history`)
             .then(res => res.json())
             .then(data => {
                 if (isSubscribed && Array.isArray(data)) {

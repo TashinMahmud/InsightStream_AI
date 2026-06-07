@@ -53,7 +53,8 @@ export default function ChatInterface() {
 
         // Fetch old history safely
         let isActive = true;
-        fetch(`http://localhost:8080/api/history/${chatId}`)
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+        fetch(`${apiUrl}/api/history/${chatId}`)
             .then(res => res.ok ? res.json() : [])
             .then(data => {
                 if (!isActive || !Array.isArray(data) || data.length === 0) return;
@@ -102,7 +103,8 @@ export default function ChatInterface() {
                 session_id: chatId || null // Send the active chat ID if continuing
             };
 
-            const res = await fetch('http://localhost:8080/api/search', {
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+            const res = await fetch(`${apiUrl}/api/search`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
