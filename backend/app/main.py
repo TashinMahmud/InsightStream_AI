@@ -8,11 +8,10 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="AI Search Engine API")
 
-# Configure CORS for the Next.js frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"], # Adjust as needed for production
-    allow_credentials=True,
+    allow_origins=["*"], # Allow all origins for production and preview deployments
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
