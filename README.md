@@ -8,6 +8,8 @@
 [![Groq](https://img.shields.io/badge/Groq-llama--3.3-orange?style=for-the-badge)](#openai-stream-client)
 [![Tavily API](https://img.shields.io/badge/Tavily-Search_API-0284C7?style=for-the-badge)](#tavily-search-context-client)
 [![SQLite](https://img.shields.io/badge/SQLite-Local_DB-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](#sqlite-history-database)
+<br/>
+[![Live Demo](https://img.shields.io/badge/Demo-insight--stream--ai--ten.vercel.app-FF5733?style=for-the-badge&logo=google-chrome&logoColor=white)](https://insight-stream-ai-ten.vercel.app/)
 
 ---
 
