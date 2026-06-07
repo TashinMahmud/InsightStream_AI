@@ -3,8 +3,10 @@ from app.core.config import settings
 from datetime import datetime
 
 def get_openai_client():
+    if settings.GROQ_API_KEY:
+        return AsyncOpenAI(api_key=settings.GROQ_API_KEY, base_url="https://api.groq.com/openai/v1")
     if not settings.OPENAI_API_KEY:
-         raise ValueError("OPENAI_API_KEY is not set in environment variables.")
+         raise ValueError("Neither OPENAI_API_KEY nor GROQ_API_KEY is set in environment variables.")
     return AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
 
 def get_system_prompt():
@@ -31,8 +33,10 @@ async def generate_streaming_response(query: str, context: str, history=None):
 
     messages.append({"role": "user", "content": f"Context:\n{context}\n\nQuery:\n{query}"})
 
+    model_name = settings.GROQ_MODEL if settings.GROQ_API_KEY else "gpt-4o-mini"
+
     response_stream = await client.chat.completions.create(
-        model="gpt-4o-mini",
+        model=model_name,
         messages=messages,
         stream=True
     )
